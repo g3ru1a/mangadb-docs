@@ -1,0 +1,30 @@
+site_name: MangaDB API
+theme:
+  language: en
+  name: material
+  palette:
+    scheme: slate
+    primary: blue
+    accent: blue
+  features:
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.path
+    - navigation.indexes
+    - toc.follow
+    - navigation.top
+    - navigation.footer
+repo_url: https://github.com/g3ru1a/mangadb-api
+copyright: Copyright &copy; 2022-2023 G3ru1a
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/g3ru1a/mangadb-api
+      name: Project Repository
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/gheM6fn9DN
+      name: Join our Community
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/ok_tracker
+      name: Follow us for Updates
