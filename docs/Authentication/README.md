@@ -12,4 +12,10 @@ To access the other endpoints in the MangaDB API, you'll need to obtain an authe
 - Sandbox tokens are available for testing purposes and do not expire.
 - If you're using the API locally, the token is set to never expire by default, although this may not be advisable for security reasons.
 
+The sandbox API provides two default user accounts, and while you can register your own account,
+it will not have elevated privileges. The available default accounts are:
+
+- User: **user@test.com** | **password**
+- Editor: **editor@test.com** | **password**
+
 <swagger-ui src="/Authentication/openapi.yml"/>

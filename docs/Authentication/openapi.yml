@@ -91,7 +91,7 @@ components:
           example: Jon Doe
         email:
           type: string
-          example: jon.doe@example.com
+          example: user@test.com
         email_verified:
           type: boolean
           example: false
@@ -106,22 +106,22 @@ components:
           example: Jon Doe
         email:
           type: string
-          example: jon.doe@example.com
+          example: user@test.com
         password:
           type: string
-          example: '12345678'
+          example: 'password'
         password_confirmation:
           type: string
-          example: '12345678'
+          example: 'password'
     UserLogin:
       type: object
       properties:
         email:
           type: string
-          example: jon.doe@example.com
+          example: user@test.com
         password:
           type: string
-          example: '12345678'
+          example: 'password'
     AuthResponse:
       type: object
       properties:
