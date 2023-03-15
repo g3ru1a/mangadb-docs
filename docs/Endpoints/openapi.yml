@@ -5,10 +5,116 @@ servers:
   - url: https://sandbox.manga-db.com
   - url: https://api.manga-db.com
 components:
+  parameters:
+    jsonContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - 'application/json'
+    jsonAccept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - 'application/json'
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      example: 'Bearer 2|BcDzBWZ7MczeYzuxJA68GOg4aujJCePXUCHoOCvY'
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+  schemas:
+    Error422:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "The name field is required. (and 1 more error)"
+        errors:
+          type: object
+          example:
+            name: [ "The name field is required" ]
+            other: [ "The other field is required" ]
+    Error401:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Unauthenticated."
+    Error403:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Only <role> can alter data."
+    Error404:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "No query results for model [App\\Models\\<Model>] <id>"
+    DataObject:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+    BindingRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Hardback"
+    BindingResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: "Hardback"
+        deleted:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+  responses:
+    BadData:
+      description: Missing / Incorrect data submitted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error422'
+    Unauthenticated:
+      description: Expired or Missing Bearer Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error401'
+    Unauthorized:
+      description: No permission (Editor/Admin Only Access)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error403'
+    NotFound:
+      description: Wrong object ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error404'
 security:
   - bearerAuth: []
 tags:
@@ -22,123 +128,166 @@ tags:
   - name: SeriesType
   - name: Book
   - name: Review
+  - name: Create
+  - name: Update
+  - name: Delete
+  - name: Index
+  - name: Show
 paths:
   /binding:
     get:
       tags:
         - Binding
-      summary: Index
+        - Index
+      summary: Get a list of bindings
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BindingResource'
     post:
       tags:
         - Binding
-      summary: Create
+        - Create
+      summary: Create a new binding type
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
-              type: string
-              example: '"{\r\n    \"name\": \"Test\"\r\n}"'
+              $ref: '#/components/schemas/BindingRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BindingRequest'
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
       responses:
         '200':
-          description: Successful response
+          description: Binding Created
           content:
-            application/json: {}
-  /binding/4:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/BindingResource'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '422':
+          $ref: '#/components/responses/BadData'
+  /binding/{binding}:
     get:
       tags:
         - Binding
-      summary: Show
+        - Show
+      summary: Display binding resource
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: binding
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the Binding resource
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
-  /binding/3:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/BindingResource'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
     put:
       tags:
         - Binding
-      summary: Update
+      summary: Update binding resource
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
-              type: string
-              example: '"{\r\n    \"name\": \"test221\"\r\n}"'
+              $ref: '#/components/schemas/BindingRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BindingRequest'
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: binding
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the Binding resource
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
-  /binding/5:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/BindingResource'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
     delete:
       tags:
         - Binding
-      summary: Delete
+      summary: Delete binding resource
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: binding
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the Binding resource
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/BindingResource'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /language:
     get:
       tags:
