@@ -28,3 +28,6 @@ extra:
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/ok_tracker
       name: Follow us for Updates
+plugins:
+  - swagger-ui-tag:
+      filter: true

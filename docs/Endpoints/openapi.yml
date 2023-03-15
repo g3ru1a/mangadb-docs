@@ -1,0 +1,1402 @@
+openapi: 3.0.0
+info: {}
+servers:
+  - url: http://localhost/api
+  - url: https://sandbox.manga-db.com
+  - url: https://api.manga-db.com
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: Binding
+  - name: Language
+  - name: ItemType
+  - name: Publisher
+  - name: Status
+  - name: Staff
+  - name: Series
+  - name: SeriesType
+  - name: Book
+  - name: Review
+paths:
+  /binding:
+    get:
+      tags:
+        - Binding
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Binding
+      summary: Create
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"Test\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /binding/4:
+    get:
+      tags:
+        - Binding
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /binding/3:
+    put:
+      tags:
+        - Binding
+      summary: Update
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"test221\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /binding/5:
+    delete:
+      tags:
+        - Binding
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /language:
+    get:
+      tags:
+        - Language
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Language
+      summary: Create
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"Test\",\r\n    \"iso_639_1\": \"kr\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /language/4:
+    get:
+      tags:
+        - Language
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Language
+      summary: Update
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"iso_639_1\": \"kwer\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /language/3:
+    delete:
+      tags:
+        - Language
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /itemtype:
+    get:
+      tags:
+        - ItemType
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - ItemType
+      summary: Create
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"Test\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /itemtype/4:
+    get:
+      tags:
+        - ItemType
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - ItemType
+      summary: Update
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"some_name\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /itemtype/3:
+    delete:
+      tags:
+        - ItemType
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /publisher:
+    get:
+      tags:
+        - Publisher
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Publisher
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name Here
+                url:
+                  type: string
+                  example: https://website.com
+                about:
+                  type: string
+                  example: This is some about text
+                logo:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /publisher/11:
+    get:
+      tags:
+        - Publisher
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Publisher
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: test
+                url:
+                  type: string
+                  example: https://viz.com
+                about:
+                  type: string
+                  example: This is some about text
+                logo:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Publisher
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /status:
+    get:
+      tags:
+        - Status
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Status
+      summary: Create
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"Test\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /status/4:
+    get:
+      tags:
+        - Status
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /status/3:
+    put:
+      tags:
+        - Status
+      summary: Update
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"test221\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /status/5:
+    delete:
+      tags:
+        - Status
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /staff:
+    get:
+      tags:
+        - Staff
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Staff
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name Here
+                native_name:
+                  type: string
+                  example: 田中
+                about:
+                  type: string
+                  example: This is some about text
+                age:
+                  type: integer
+                  example: '41'
+                gender:
+                  type: string
+                  example: Male<a href="youtube.com"></a>
+                origin:
+                  type: string
+                  example: New York
+                started_on:
+                  type: integer
+                  example: '2001'
+                stopped_on:
+                  type: integer
+                  example: '2022'
+                picture:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /staff/21:
+    get:
+      tags:
+        - Staff
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Staff
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Tanaka
+                native_name:
+                  type: string
+                  example: 田中
+                about:
+                  type: string
+                  example: This is some about text
+                age:
+                  type: integer
+                  example: '41'
+                gender:
+                  type: string
+                  example: Male
+                origin:
+                  type: string
+                  example: New York
+                started_on:
+                  type: integer
+                  example: '2001'
+                stopped_on:
+                  type: integer
+                  example: '2022'
+                picture:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Staff
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series:
+    get:
+      tags:
+        - Series
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Series
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                names[]:
+                  type: string
+                  example: Name2
+                name_languages[]:
+                  type: integer
+                  example: '2'
+                cover:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series/1:
+    get:
+      tags:
+        - Series
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Series
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                cover:
+                  type: string
+                  format: binary
+                names[]:
+                  type: string
+                  example: Name4
+                name_languages[]:
+                  type: integer
+                  example: '3'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Series
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series-type:
+    get:
+      tags:
+        - SeriesType
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - SeriesType
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                series_id:
+                  type: integer
+                  example: '1'
+                item_type_id:
+                  type: integer
+                  example: '1'
+                status_id:
+                  type: integer
+                  example: '1'
+                staff[]:
+                  type: integer
+                  example: '2'
+                roles[]:
+                  type: string
+                  example: '''designer'''
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series-type/1:
+    get:
+      tags:
+        - SeriesType
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - SeriesType
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                series_id:
+                  type: integer
+                  example: '1'
+                item_type_id:
+                  type: integer
+                  example: '1'
+                status_id:
+                  type: integer
+                  example: '1'
+                staff[]:
+                  type: integer
+                  example: '7'
+                roles[]:
+                  type: string
+                  example: artist
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series-type/3:
+    delete:
+      tags:
+        - SeriesType
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /book:
+    get:
+      tags:
+        - Book
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Book
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name Here
+                summary:
+                  type: string
+                  example: this is a decently lengthy text
+                number:
+                  type: integer
+                  example: '2'
+                isbn_10:
+                  type: integer
+                  example: '1234567890'
+                isbn_13:
+                  type: integer
+                  example: '1234567890123'
+                page_count:
+                  type: integer
+                  example: '200'
+                release_date:
+                  type: string
+                  example: 15 October 2019
+                series_type_id:
+                  type: integer
+                  example: '1'
+                publisher_id:
+                  type: integer
+                  example: '1'
+                language_id:
+                  type: integer
+                  example: '1'
+                binding_id:
+                  type: integer
+                  example: '1'
+                cover:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /book/27:
+    get:
+      tags:
+        - Book
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /book/4:
+    post:
+      tags:
+        - Book
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name Here
+                summary:
+                  type: string
+                  example: this is a decently lengthy text
+                number:
+                  type: integer
+                  example: '2'
+                isbn_10:
+                  type: integer
+                  example: '1234567890'
+                isbn_13:
+                  type: integer
+                  example: '1234567890123'
+                page_count:
+                  type: integer
+                  example: '200'
+                release_date:
+                  type: string
+                  example: 15 October 2019
+                series_type_id:
+                  type: integer
+                  example: '1'
+                publisher_id:
+                  type: integer
+                  example: '1'
+                language_id:
+                  type: integer
+                  example: '1'
+                binding_id:
+                  type: integer
+                  example: '1'
+                cover:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /book/11:
+    delete:
+      tags:
+        - Book
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/assign/9:
+    post:
+      tags:
+        - Review
+      summary: Assign
+      requestBody:
+        content: {}
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/comments/3:
+    get:
+      tags:
+        - Review
+      summary: Comments
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/comment/3:
+    post:
+      tags:
+        - Review
+      summary: Comment
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: >-
+                "{\r\n    \"message\": \"why the fuck you reject me you little
+                bitch\"\r\n}"
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/approve/1:
+    post:
+      tags:
+        - Review
+      summary: Approve
+      requestBody:
+        content: {}
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/reject/11:
+    post:
+      tags:
+        - Review
+      summary: Reject
+      requestBody:
+        content: {}
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
