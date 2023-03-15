@@ -116,6 +116,26 @@ components:
           example: "2023-03-13 01:21:26"
           required: false
           description: "Only shows up when a resource has been deleted"
+    ItemTypeRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Light Novel"
+    ItemTypeResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: "Light Novel"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
   responses:
     BadData:
       description: Missing / Incorrect data submitted
@@ -161,6 +181,16 @@ components:
               - properties:
                   data:
                     $ref: '#/components/schemas/LanguageResource'
+    ItemType200:
+      description: Successfull operation for ItemType Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/ItemTypeResource'
 security:
   - bearerAuth: []
 tags:
@@ -434,117 +464,128 @@ paths:
     get:
       tags:
         - ItemType
-      summary: Index
+        - Index
+      summary: Get a list of ItemTypes
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ItemTypeResource'
     post:
       tags:
         - ItemType
-      summary: Create
+        - Create
+      summary: Create a new ItemType
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
-              type: string
-              example: '"{\r\n    \"name\": \"Test\"\r\n}"'
-      parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+              $ref: '#/components/schemas/ItemTypeRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ItemTypeRequest'
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /itemtype/4:
+          $ref: '#/components/responses/ItemType200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '422':
+          $ref: '#/components/responses/BadData'
+  /itemtype/{itemtype}:
     get:
       tags:
         - ItemType
-      summary: Show
+        - Show
+      summary: Display an ItemType
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: itemtype
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
+          $ref: '#/components/responses/ItemType200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
     put:
       tags:
         - ItemType
-      summary: Update
+        - Update
+      summary: Update an ItemType
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: itemtype
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
-              type: string
-              example: '"{\r\n    \"name\": \"some_name\"\r\n}"'
-      parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+              $ref: '#/components/schemas/ItemTypeRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ItemTypeRequest'
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /itemtype/3:
+          $ref: '#/components/responses/ItemType200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/BadData'
     delete:
       tags:
         - ItemType
-      summary: Delete
+        - Delete
+      summary: Delete an ItemType
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: itemtype
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
+          $ref: '#/components/responses/ItemType200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /publisher:
     get:
       tags:
