@@ -19,5 +19,5 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - run: pip install mkdocs-material mkdocs-swagger-ui-tag
-      - run: echo docs.manga-db.com > ~/CNAME
+      - run: echo docs.manga-db.com >> CNAME
       - run: mkdocs gh-deploy --force
