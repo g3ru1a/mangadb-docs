@@ -85,7 +85,33 @@ components:
         name:
           type: string
           example: "Hardback"
-        deleted:
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    LanguageRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "English"
+        iso_639_1:
+          type: string
+          example: "en"
+    LanguageResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "English"
+        iso_639_1:
+          type: string
+          example: "en"
+        deleted_at:
           type: string
           example: "2023-03-13 01:21:26"
           required: false
@@ -115,6 +141,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error404'
+    Binding200:
+      description: Successfull operation for Binding Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/BindingResource'
+    Language200:
+      description: Successfull operation for Language Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/LanguageResource'
 security:
   - bearerAuth: []
 tags:
@@ -176,15 +222,7 @@ paths:
         - $ref: '#/components/parameters/authorization'
       responses:
         '200':
-          description: Binding Created
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/DataObject'
-                  - properties:
-                      data:
-                        $ref: '#/components/schemas/BindingResource'
+          $ref: '#/components/responses/Binding200'
         '401':
           $ref: '#/components/responses/Unauthenticated'
         '422':
@@ -207,15 +245,7 @@ paths:
           description: Numeric ID of the Binding resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/DataObject'
-                  - properties:
-                      data:
-                        $ref: '#/components/schemas/BindingResource'
+          $ref: '#/components/responses/Binding200'
         '401':
           $ref: '#/components/responses/Unauthenticated'
         '404':
@@ -244,19 +274,13 @@ paths:
           description: Numeric ID of the Binding resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/DataObject'
-                  - properties:
-                      data:
-                        $ref: '#/components/schemas/BindingResource'
+          $ref: '#/components/responses/Binding200'
         '401':
           $ref: '#/components/responses/Unauthenticated'
         '404':
           $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/BadData'
     delete:
       tags:
         - Binding
@@ -273,15 +297,7 @@ paths:
           description: Numeric ID of the Binding resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/DataObject'
-                  - properties:
-                      data:
-                        $ref: '#/components/schemas/BindingResource'
+          $ref: '#/components/responses/Binding200'
         '401':
           $ref: '#/components/responses/Unauthenticated'
         '403':
@@ -292,117 +308,128 @@ paths:
     get:
       tags:
         - Language
-      summary: Index
+        - Index
+      summary: Get a list of Languages
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/LanguageResource'
     post:
       tags:
         - Language
-      summary: Create
+        - Create
+      summary: Create a new Language entry
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
-              type: string
-              example: '"{\r\n    \"name\": \"Test\",\r\n    \"iso_639_1\": \"kr\"\r\n}"'
-      parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+              $ref: '#/components/schemas/LanguageRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LanguageRequest'
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /language/4:
+          $ref: '#/components/responses/Language200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '422':
+          $ref: '#/components/responses/BadData'
+  /language/{language}:
     get:
       tags:
         - Language
-      summary: Show
+        - SHow
+      summary: Display a language resource
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: language
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the Language resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
+          $ref: '#/components/responses/Language200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
     put:
       tags:
         - Language
-      summary: Update
+        - Update
+      summary: Update a language resource
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: language
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Language resource
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
-              type: string
-              example: '"{\r\n    \"iso_639_1\": \"kwer\"\r\n}"'
-      parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+              $ref: '#/components/schemas/LanguageRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LanguageRequest'
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /language/3:
+          $ref: '#/components/responses/Language200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/BadData'
     delete:
       tags:
         - Language
-      summary: Delete
+        - Delete
+      summary: Delete a language resource
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: language
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the Language resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
+          $ref: '#/components/responses/Language200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /itemtype:
     get:
       tags:
