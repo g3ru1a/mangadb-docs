@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info: {}
+servers:
+  - url: http://localhost/api
+  - url: https://sandbox.manga-db.com
+  - url: https://api.manga-db.com
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: CRUD
+paths:
+  /itemtype:
+    get:
+      tags:
+        - CRUD
+      summary: Get a list of ItemTypes
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '/openapi-components.yml#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '/openapi-components.yml#/components/schemas/ItemTypeResource'
+    post:
+      tags:
+        - CRUD
+      summary: Create a new ItemType
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '/openapi-components.yml#/components/schemas/ItemTypeRequest'
+          application/xml:
+            schema:
+              $ref: '/openapi-components.yml#/components/schemas/ItemTypeRequest'
+      responses:
+        '200':
+          $ref: '/openapi-components.yml#/components/responses/ItemType200'
+        '401':
+          $ref: '/openapi-components.yml#/components/responses/Unauthenticated'
+        '422':
+          $ref: '/openapi-components.yml#/components/responses/BadData'
+  /itemtype/{itemtype}:
+    get:
+      tags:
+        - CRUD
+      summary: Display an ItemType
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+        - in: path
+          name: itemtype
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
+      responses:
+        '200':
+          $ref: '/openapi-components.yml#/components/responses/ItemType200'
+        '401':
+          $ref: '/openapi-components.yml#/components/responses/Unauthenticated'
+        '404':
+          $ref: '/openapi-components.yml#/components/responses/NotFound'
+    put:
+      tags:
+        - CRUD
+      summary: Update an ItemType
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+        - in: path
+          name: itemtype
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '/openapi-components.yml#/components/schemas/ItemTypeRequest'
+          application/xml:
+            schema:
+              $ref: '/openapi-components.yml#/components/schemas/ItemTypeRequest'
+      responses:
+        '200':
+          $ref: '/openapi-components.yml#/components/responses/ItemType200'
+        '401':
+          $ref: '/openapi-components.yml#/components/responses/Unauthenticated'
+        '404':
+          $ref: '/openapi-components.yml#/components/responses/NotFound'
+        '422':
+          $ref: '/openapi-components.yml#/components/responses/BadData'
+    delete:
+      tags:
+        - CRUD
+      summary: Delete an ItemType
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+        - in: path
+          name: itemtype
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
+      responses:
+        '200':
+          $ref: '/openapi-components.yml#/components/responses/ItemType200'
+        '401':
+          $ref: '/openapi-components.yml#/components/responses/Unauthenticated'
+        '403':
+          $ref: '/openapi-components.yml#/components/responses/Unauthorized'
+        '404':
+          $ref: '/openapi-components.yml#/components/responses/NotFound'

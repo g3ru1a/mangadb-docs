@@ -11,10 +11,11 @@ theme:
     - navigation.tabs
     - navigation.sections
     - navigation.path
-    - navigation.indexes
     - toc.follow
     - navigation.top
+    - toc.integrate
     - navigation.footer
+    - navigation.expand
 repo_url: https://github.com/g3ru1a/mangadb-api
 copyright: Copyright &copy; 2022-2023 G3ru1a
 extra:
@@ -29,5 +30,6 @@ extra:
       link: https://twitter.com/ok_tracker
       name: Follow us for Updates
 plugins:
+  - search
   - swagger-ui-tag:
-      filter: true
+      filter: false

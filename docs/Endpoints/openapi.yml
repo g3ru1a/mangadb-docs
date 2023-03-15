@@ -70,6 +70,15 @@ components:
       properties:
         data:
           type: array
+    MediaResource:
+      type: object
+      properties:
+        url:
+          type: string
+          example: "https://via.placeholder.com/400x400.png/0077ff?text=iure"
+        meta:
+          type: string
+          example: "cover photo"
     BindingRequest:
       type: object
       properties:
@@ -136,6 +145,43 @@ components:
           example: "2023-03-13 01:21:26"
           required: false
           description: "Only shows up when a resource has been deleted"
+    PublisherRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "VIZ Media"
+        url:
+          type: string
+          example: "https://www.viz.com/"
+        about:
+          type: string
+          example: "VIZ Media LLC is an American entertainment company headquartered in San Francisco, California, focused on publishing manga, distribution and licensing Japanese anime, films, and television series. It was founded in 1986 as VIZ LLC. In 2005, VIZ LLC and ShoPro Entertainment merged to form the current VIZ Media LLC, which is owned by Japanese publishing conglomerates Shueisha and Shogakukan, as well as Japanese production company Shogakukan-Shueisha Productions (ShoPro)."
+        logo:
+          type: string
+          format: binary
+    PublisherResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "VIZ Media"
+        url:
+          type: string
+          example: "https://www.viz.com/"
+        about:
+          type: string
+          example: "VIZ Media LLC is an American entertainment company headquartered in San Francisco, California, focused on publishing manga, distribution and licensing Japanese anime, films, and television series. It was founded in 1986 as VIZ LLC. In 2005, VIZ LLC and ShoPro Entertainment merged to form the current VIZ Media LLC, which is owned by Japanese publishing conglomerates Shueisha and Shogakukan, as well as Japanese production company Shogakukan-Shueisha Productions (ShoPro)."
+        logo:
+          $ref: '#/components/schemas/MediaResource'
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
   responses:
     BadData:
       description: Missing / Incorrect data submitted
@@ -191,6 +237,16 @@ components:
               - properties:
                   data:
                     $ref: '#/components/schemas/ItemTypeResource'
+    Publisher200:
+      description: Successfull operation for Publisher Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/PublisherResource'
 security:
   - bearerAuth: []
 tags:
@@ -590,145 +646,128 @@ paths:
     get:
       tags:
         - Publisher
-      summary: Index
+        - Index
+      summary: Show a list of publishers
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PublisherResource'
     post:
       tags:
         - Publisher
-      summary: Create
+        - Create
+      summary: Create a Publisher
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
       requestBody:
         content:
           multipart/form-data:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Name Here
-                url:
-                  type: string
-                  example: https://website.com
-                about:
-                  type: string
-                  example: This is some about text
-                logo:
-                  type: string
-                  format: binary
-      parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+              $ref: '#/components/schemas/PublisherRequest'
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /publisher/11:
+          $ref: '#/components/responses/Publisher200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '422':
+          $ref: '#/components/responses/BadData'
+  /publisher/{publisher}:
     get:
       tags:
         - Publisher
-      summary: Show
+        - Show
+      summary: Show a Publisher
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: publisher
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the Publisher resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
+          $ref: '#/components/responses/Publisher200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
     post:
       tags:
         - Publisher
-      summary: Update
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: test
-                url:
-                  type: string
-                  example: https://viz.com
-                about:
-                  type: string
-                  example: This is some about text
-                logo:
-                  type: string
-                  format: binary
+        - Update
+      summary: Update a Publisher
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: publisher
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the Publisher resource
         - name: _method
           in: query
           schema:
             type: string
+          required: true
           example: PUT
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PublisherRequest'
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
+          $ref: '#/components/responses/Publisher200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/BadData'
     delete:
       tags:
         - Publisher
-      summary: Delete
+        - Delete
+      summary: Delete a Publisher
       parameters:
-        - name: Accept
-          in: header
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: publisher
           schema:
-            type: string
-          example: application/json
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+            type: integer
+          required: true
+          description: Numeric ID of the Publisher resource
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
+          $ref: '#/components/responses/Publisher200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /status:
     get:
       tags:
