@@ -175,6 +175,26 @@ components:
           example: "2023-03-13 01:21:26"
           required: false
           description: "Only shows up when a resource has been deleted"
+    StatusRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Ongoing"
+    StatusResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: "Ongoing"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
   responses:
     BadData:
       description: Missing / Incorrect data submitted
@@ -240,3 +260,13 @@ components:
               - properties:
                   data:
                     $ref: '#/components/schemas/PublisherResource'
+    Status200:
+      description: Successfull operation for Status Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/StatusResource'

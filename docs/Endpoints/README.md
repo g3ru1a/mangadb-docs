@@ -52,6 +52,8 @@ to users. This enables users to discover new books and publishers more easily.
 
 ## Statuses
 
+<swagger-ui src="./status/openapi.yml"/>
+
 ## Staff
 
 ## Series

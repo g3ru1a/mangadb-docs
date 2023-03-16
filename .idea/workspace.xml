@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df929879-ac52-4c6c-b160-0d55d2724c55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/binding/openapi.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/components.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/itemtype/openapi.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/language/openapi.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/publisher/openapi.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/reviews.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/openapi-components.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/Endpoints/status/openapi.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/Endpoints/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Endpoints/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/Endpoints/openapi.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Endpoints/openapi.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mkdocs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mkdocs.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/openapi-components.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/openapi-components.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +36,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "G:/Projects/mangadb-docs/docs/Endpoints/partials",
+    "last_opened_file_path": "G:/Projects/mangadb-docs/docs/Endpoints",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -54,8 +47,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="G:\Projects\mangadb-docs\docs\Endpoints\partials" />
       <recent name="G:\Projects\mangadb-docs\docs\Endpoints" />
+      <recent name="G:\Projects\mangadb-docs\docs\Endpoints\partials" />
       <recent name="G:\Projects\mangadb-docs\docs\Data Structures" />
       <recent name="G:\Projects\mangadb-docs\docs\ro" />
       <recent name="G:\Projects\mangadb-docs\docs\docsv1\jp" />
@@ -82,7 +75,7 @@
       <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
       <option name="jdkPath" value="" />
       <option name="language" value="java" />
-      <option name="specificationPath" value="G:\Projects\mangadb-docs\docs\Endpoints\partials\parameters.yml" />
+      <option name="specificationPath" value="G:\Projects\mangadb-docs\docs\Endpoints\status\openapi.yml" />
       <method v="2" />
     </configuration>
   </component>
@@ -96,7 +89,8 @@
       <updated>1678674430842</updated>
       <workItem from="1678674432125" duration="18582000" />
       <workItem from="1678807869159" duration="12984000" />
-      <workItem from="1678898225660" duration="18767000" />
+      <workItem from="1678898225660" duration="19160000" />
+      <workItem from="1678978528880" duration="354000" />
     </task>
     <servers />
   </component>

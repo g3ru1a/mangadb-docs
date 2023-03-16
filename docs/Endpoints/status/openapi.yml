@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info: {}
+servers:
+  - url: http://localhost/api
+  - url: https://sandbox.manga-db.com
+  - url: https://api.manga-db.com
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: CRUD
+paths:
+  /status:
+    get:
+      tags:
+        - CRUD
+      summary: Show a list of statuses
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '/openapi-components.yml#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '/openapi-components.yml#/components/schemas/StatusResource'
+    post:
+      tags:
+        - CRUD
+      summary: Create a Status
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '/openapi-components.yml#/components/schemas/StatusRequest'
+          application/xml:
+            schema:
+              $ref: '/openapi-components.yml#/components/schemas/StatusRequest'
+      responses:
+        '200':
+          $ref: '/openapi-components.yml#/components/responses/Status200'
+        '401':
+          $ref: '/openapi-components.yml#/components/responses/Unauthenticated'
+        '422':
+          $ref: '/openapi-components.yml#/components/responses/BadData'
+  /status/{status}:
+    get:
+      tags:
+        - CRUD
+      summary: Show a Status
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+        - in: path
+          name: status
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Status resource
+      responses:
+        '200':
+          $ref: '/openapi-components.yml#/components/responses/Status200'
+        '401':
+          $ref: '/openapi-components.yml#/components/responses/Unauthenticated'
+        '404':
+          $ref: '/openapi-components.yml#/components/responses/NotFound'
+    post:
+      tags:
+        - CRUD
+      summary: Update a Status
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+        - in: path
+          name: status
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Status resource
+        - name: _method
+          in: query
+          schema:
+            type: string
+          required: true
+          example: PUT
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '/openapi-components.yml#/components/schemas/StatusRequest'
+          application/xml:
+            schema:
+              $ref: '/openapi-components.yml#/components/schemas/StatusRequest'
+      responses:
+        '200':
+          $ref: '/openapi-components.yml#/components/responses/Status200'
+        '401':
+          $ref: '/openapi-components.yml#/components/responses/Unauthenticated'
+        '404':
+          $ref: '/openapi-components.yml#/components/responses/NotFound'
+        '422':
+          $ref: '/openapi-components.yml#/components/responses/BadData'
+    delete:
+      tags:
+        - CRUD
+      summary: Delete a Status
+      parameters:
+        - $ref: '/openapi-components.yml#/components/parameters/jsonAccept'
+        - $ref: '/openapi-components.yml#/components/parameters/jsonContentType'
+        - $ref: '/openapi-components.yml#/components/parameters/authorization'
+        - in: path
+          name: status
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Status resource
+      responses:
+        '200':
+          $ref: '/openapi-components.yml#/components/responses/Status200'
+        '401':
+          $ref: '/openapi-components.yml#/components/responses/Unauthenticated'
+        '403':
+          $ref: '/openapi-components.yml#/components/responses/Unauthorized'
+        '404':
+          $ref: '/openapi-components.yml#/components/responses/NotFound'
