@@ -52,22 +52,33 @@ to users. This enables users to discover new books and publishers more easily.
 
 ## Statuses
 
+The status is used to denote the current state of a book or series. For example, a book that is currently being published
+would have a status of "Ongoing", while a book that has been completed would have a status of "Completed".
+
 <swagger-ui src="./status/openapi.yml"/>
 
 ## Staff
+
+Staff data refers to information about the people who worked on a book, such as the author, illustrator, editor etc.
 
 <swagger-ui src="./staff/openapi.yml"/>
 
 ## Series
 
+Series contains all the variations of a title, such as manga, novels, light novels, special editions etc.
 
 <swagger-ui src="./series/openapi.yml"/>
 
 ## SeriesType
 
+SeriesType contains data about certain variations of a title. For example, a series could have a type of "Manga" or
+"Light Novel" and all the books in that series-type would be of that type.
+
 <swagger-ui src="./seriestype/openapi.yml"/>
 
 ## Book
+
+Book contains all the information about a book, such as the title, author, publisher, ISBN, release date etc.
 
 <swagger-ui src="./book/openapi.yml"/>
 

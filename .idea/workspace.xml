@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df929879-ac52-4c6c-b160-0d55d2724c55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/book/openapi.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/series/openapi.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/seriestype/openapi.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/Endpoints/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Endpoints/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/openapi-components.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/openapi-components.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +73,7 @@
       <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
       <option name="jdkPath" value="" />
       <option name="language" value="java" />
-      <option name="specificationPath" value="G:\Projects\mangadb-docs\docs\Endpoints\book\openapi.yml" />
+      <option name="specificationPath" value="G:\Projects\mangadb-docs\docs\openapi-components.yml" />
       <method v="2" />
     </configuration>
   </component>
@@ -95,7 +91,7 @@
       <workItem from="1678978528880" duration="421000" />
       <workItem from="1679417353235" duration="2000" />
       <workItem from="1679608659988" duration="19000" />
-      <workItem from="1679933346117" duration="3674000" />
+      <workItem from="1679933346117" duration="4342000" />
     </task>
     <servers />
   </component>
