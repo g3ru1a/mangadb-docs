@@ -1,0 +1,1658 @@
+openapi: 3.0.0
+info: {}
+servers:
+  - url: http://localhost/api
+  - url: https://sandbox.manga-db.com
+  - url: https://api.manga-db.com
+components:
+  parameters:
+    jsonContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - 'application/json'
+    jsonAccept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - 'application/json'
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      example: 'Bearer 2|BcDzBWZ7MczeYzuxJA68GOg4aujJCePXUCHoOCvY'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Error422:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "The name field is required. (and 1 more error)"
+        errors:
+          type: object
+          example:
+            name: [ "The name field is required" ]
+            other: [ "The other field is required" ]
+    Error401:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Unauthenticated."
+    Error403:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Only <role> can alter data."
+    Error404:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "No query results for model [App\\Models\\<Model>] <id>"
+    DataObject:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+    MediaResource:
+      type: object
+      properties:
+        url:
+          type: string
+          example: "https://via.placeholder.com/400x400.png/0077ff?text=iure"
+        meta:
+          type: string
+          example: "cover photo"
+    BindingRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Hardback"
+    BindingResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: "Hardback"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    LanguageRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "English"
+        iso_639_1:
+          type: string
+          example: "en"
+    LanguageResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "English"
+        iso_639_1:
+          type: string
+          example: "en"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    ItemTypeRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Light Novel"
+    ItemTypeResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: "Light Novel"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    PublisherRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "VIZ Media"
+        url:
+          type: string
+          example: "https://www.viz.com/"
+        about:
+          type: string
+          example: "VIZ Media LLC is an American entertainment company headquartered in San Francisco, California, focused on publishing manga, distribution and licensing Japanese anime, films, and television series. It was founded in 1986 as VIZ LLC. In 2005, VIZ LLC and ShoPro Entertainment merged to form the current VIZ Media LLC, which is owned by Japanese publishing conglomerates Shueisha and Shogakukan, as well as Japanese production company Shogakukan-Shueisha Productions (ShoPro)."
+        logo:
+          type: string
+          format: binary
+    PublisherResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "VIZ Media"
+        url:
+          type: string
+          example: "https://www.viz.com/"
+        about:
+          type: string
+          example: "VIZ Media LLC is an American entertainment company headquartered in San Francisco, California, focused on publishing manga, distribution and licensing Japanese anime, films, and television series. It was founded in 1986 as VIZ LLC. In 2005, VIZ LLC and ShoPro Entertainment merged to form the current VIZ Media LLC, which is owned by Japanese publishing conglomerates Shueisha and Shogakukan, as well as Japanese production company Shogakukan-Shueisha Productions (ShoPro)."
+        logo:
+          $ref: '#/components/schemas/MediaResource'
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+  responses:
+    BadData:
+      description: Missing / Incorrect data submitted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error422'
+    Unauthenticated:
+      description: Expired or Missing Bearer Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error401'
+    Unauthorized:
+      description: No permission (Editor/Admin Only Access)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error403'
+    NotFound:
+      description: Wrong object ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error404'
+    Binding200:
+      description: Successfull operation for Binding Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/BindingResource'
+    Language200:
+      description: Successfull operation for Language Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/LanguageResource'
+    ItemType200:
+      description: Successfull operation for ItemType Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/ItemTypeResource'
+    Publisher200:
+      description: Successfull operation for Publisher Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/PublisherResource'
+security:
+  - bearerAuth: []
+tags:
+  - name: Binding
+  - name: Language
+  - name: ItemType
+  - name: Publisher
+  - name: Status
+  - name: Staff
+  - name: Series
+  - name: SeriesType
+  - name: Book
+  - name: Review
+  - name: Create
+  - name: Update
+  - name: Delete
+  - name: Index
+  - name: Show
+paths:
+  /binding:
+    get:
+      tags:
+        - Binding
+        - Index
+      summary: Get a list of bindings
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BindingResource'
+    post:
+      tags:
+        - Binding
+        - Create
+      summary: Create a new binding type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BindingRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BindingRequest'
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          $ref: '#/components/responses/Binding200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '422':
+          $ref: '#/components/responses/BadData'
+  /binding/{binding}:
+    get:
+      tags:
+        - Binding
+        - Show
+      summary: Display binding resource
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: binding
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Binding resource
+      responses:
+        '200':
+          $ref: '#/components/responses/Binding200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Binding
+      summary: Update binding resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BindingRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BindingRequest'
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: binding
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Binding resource
+      responses:
+        '200':
+          $ref: '#/components/responses/Binding200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/BadData'
+    delete:
+      tags:
+        - Binding
+      summary: Delete binding resource
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: binding
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Binding resource
+      responses:
+        '200':
+          $ref: '#/components/responses/Binding200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /language:
+    get:
+      tags:
+        - Language
+        - Index
+      summary: Get a list of Languages
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/LanguageResource'
+    post:
+      tags:
+        - Language
+        - Create
+      summary: Create a new Language entry
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LanguageRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LanguageRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Language200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '422':
+          $ref: '#/components/responses/BadData'
+  /language/{language}:
+    get:
+      tags:
+        - Language
+        - SHow
+      summary: Display a language resource
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: language
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Language resource
+      responses:
+        '200':
+          $ref: '#/components/responses/Language200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Language
+        - Update
+      summary: Update a language resource
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: language
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Language resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LanguageRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LanguageRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Language200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/BadData'
+    delete:
+      tags:
+        - Language
+        - Delete
+      summary: Delete a language resource
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: language
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Language resource
+      responses:
+        '200':
+          $ref: '#/components/responses/Language200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /itemtype:
+    get:
+      tags:
+        - ItemType
+        - Index
+      summary: Get a list of ItemTypes
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ItemTypeResource'
+    post:
+      tags:
+        - ItemType
+        - Create
+      summary: Create a new ItemType
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemTypeRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ItemTypeRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ItemType200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '422':
+          $ref: '#/components/responses/BadData'
+  /itemtype/{itemtype}:
+    get:
+      tags:
+        - ItemType
+        - Show
+      summary: Display an ItemType
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: itemtype
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
+      responses:
+        '200':
+          $ref: '#/components/responses/ItemType200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - ItemType
+        - Update
+      summary: Update an ItemType
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: itemtype
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemTypeRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ItemTypeRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ItemType200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/BadData'
+    delete:
+      tags:
+        - ItemType
+        - Delete
+      summary: Delete an ItemType
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: itemtype
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ItemType resource
+      responses:
+        '200':
+          $ref: '#/components/responses/ItemType200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /publisher:
+    get:
+      tags:
+        - Publisher
+        - Index
+      summary: Show a list of publishers
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataObject'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PublisherResource'
+    post:
+      tags:
+        - Publisher
+        - Create
+      summary: Create a Publisher
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PublisherRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Publisher200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '422':
+          $ref: '#/components/responses/BadData'
+  /publisher/{publisher}:
+    get:
+      tags:
+        - Publisher
+        - Show
+      summary: Show a Publisher
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: publisher
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Publisher resource
+      responses:
+        '200':
+          $ref: '#/components/responses/Publisher200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+        - Publisher
+        - Update
+      summary: Update a Publisher
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: publisher
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Publisher resource
+        - name: _method
+          in: query
+          schema:
+            type: string
+          required: true
+          example: PUT
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PublisherRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Publisher200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/BadData'
+    delete:
+      tags:
+        - Publisher
+        - Delete
+      summary: Delete a Publisher
+      parameters:
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/authorization'
+        - in: path
+          name: publisher
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Publisher resource
+      responses:
+        '200':
+          $ref: '#/components/responses/Publisher200'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /status:
+    get:
+      tags:
+        - Status
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Status
+      summary: Create
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"Test\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /status/4:
+    get:
+      tags:
+        - Status
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /status/3:
+    put:
+      tags:
+        - Status
+      summary: Update
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: '"{\r\n    \"name\": \"test221\"\r\n}"'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /status/5:
+    delete:
+      tags:
+        - Status
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /staff:
+    get:
+      tags:
+        - Staff
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Staff
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name Here
+                native_name:
+                  type: string
+                  example: 田中
+                about:
+                  type: string
+                  example: This is some about text
+                age:
+                  type: integer
+                  example: '41'
+                gender:
+                  type: string
+                  example: Male<a href="youtube.com"></a>
+                origin:
+                  type: string
+                  example: New York
+                started_on:
+                  type: integer
+                  example: '2001'
+                stopped_on:
+                  type: integer
+                  example: '2022'
+                picture:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /staff/21:
+    get:
+      tags:
+        - Staff
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Staff
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Tanaka
+                native_name:
+                  type: string
+                  example: 田中
+                about:
+                  type: string
+                  example: This is some about text
+                age:
+                  type: integer
+                  example: '41'
+                gender:
+                  type: string
+                  example: Male
+                origin:
+                  type: string
+                  example: New York
+                started_on:
+                  type: integer
+                  example: '2001'
+                stopped_on:
+                  type: integer
+                  example: '2022'
+                picture:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Staff
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series:
+    get:
+      tags:
+        - Series
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Series
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                names[]:
+                  type: string
+                  example: Name2
+                name_languages[]:
+                  type: integer
+                  example: '2'
+                cover:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series/1:
+    get:
+      tags:
+        - Series
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Series
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                cover:
+                  type: string
+                  format: binary
+                names[]:
+                  type: string
+                  example: Name4
+                name_languages[]:
+                  type: integer
+                  example: '3'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Series
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series-type:
+    get:
+      tags:
+        - SeriesType
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - SeriesType
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                series_id:
+                  type: integer
+                  example: '1'
+                item_type_id:
+                  type: integer
+                  example: '1'
+                status_id:
+                  type: integer
+                  example: '1'
+                staff[]:
+                  type: integer
+                  example: '2'
+                roles[]:
+                  type: string
+                  example: '''designer'''
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series-type/1:
+    get:
+      tags:
+        - SeriesType
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - SeriesType
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                series_id:
+                  type: integer
+                  example: '1'
+                item_type_id:
+                  type: integer
+                  example: '1'
+                status_id:
+                  type: integer
+                  example: '1'
+                staff[]:
+                  type: integer
+                  example: '7'
+                roles[]:
+                  type: string
+                  example: artist
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /series-type/3:
+    delete:
+      tags:
+        - SeriesType
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /book:
+    get:
+      tags:
+        - Book
+      summary: Index
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Book
+      summary: Create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name Here
+                summary:
+                  type: string
+                  example: this is a decently lengthy text
+                number:
+                  type: integer
+                  example: '2'
+                isbn_10:
+                  type: integer
+                  example: '1234567890'
+                isbn_13:
+                  type: integer
+                  example: '1234567890123'
+                page_count:
+                  type: integer
+                  example: '200'
+                release_date:
+                  type: string
+                  example: 15 October 2019
+                series_type_id:
+                  type: integer
+                  example: '1'
+                publisher_id:
+                  type: integer
+                  example: '1'
+                language_id:
+                  type: integer
+                  example: '1'
+                binding_id:
+                  type: integer
+                  example: '1'
+                cover:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /book/27:
+    get:
+      tags:
+        - Book
+      summary: Show
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /book/4:
+    post:
+      tags:
+        - Book
+      summary: Update
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name Here
+                summary:
+                  type: string
+                  example: this is a decently lengthy text
+                number:
+                  type: integer
+                  example: '2'
+                isbn_10:
+                  type: integer
+                  example: '1234567890'
+                isbn_13:
+                  type: integer
+                  example: '1234567890123'
+                page_count:
+                  type: integer
+                  example: '200'
+                release_date:
+                  type: string
+                  example: 15 October 2019
+                series_type_id:
+                  type: integer
+                  example: '1'
+                publisher_id:
+                  type: integer
+                  example: '1'
+                language_id:
+                  type: integer
+                  example: '1'
+                binding_id:
+                  type: integer
+                  example: '1'
+                cover:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: _method
+          in: query
+          schema:
+            type: string
+          example: PUT
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /book/11:
+    delete:
+      tags:
+        - Book
+      summary: Delete
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/assign/9:
+    post:
+      tags:
+        - Review
+      summary: Assign
+      requestBody:
+        content: {}
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/comments/3:
+    get:
+      tags:
+        - Review
+      summary: Comments
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/comment/3:
+    post:
+      tags:
+        - Review
+      summary: Comment
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: >-
+                "{\r\n    \"message\": \"why the fuck you reject me you little
+                bitch\"\r\n}"
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/approve/1:
+    post:
+      tags:
+        - Review
+      summary: Approve
+      requestBody:
+        content: {}
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /review/reject/11:
+    post:
+      tags:
+        - Review
+      summary: Reject
+      requestBody:
+        content: {}
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

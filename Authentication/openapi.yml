@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info: {}
+servers:
+  - url: http://localhost/api
+  - url: https://sandbox.manga-db.com
+  - url: https://api.manga-db.com
+tags:
+  - name: Auth
+paths:
+  /register:
+    post:
+      tags:
+        - Auth
+      summary: Create a new user
+      requestBody:
+        description: User Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      parameters:
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/jsonAccept'
+      responses:
+        '200':
+          description: User Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error422'
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Authenticate User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      parameters:
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/jsonAccept'
+      responses:
+        '200':
+          description: User Authenticated Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error422'
+  /logout:
+    post:
+      tags:
+        - Auth
+      summary: Delete user tokens
+      parameters:
+        - $ref: '#/components/parameters/jsonContentType'
+        - $ref: '#/components/parameters/jsonAccept'
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Unauthenticated Successfully
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 6
+        name:
+          type: string
+          example: Jon Doe
+        email:
+          type: string
+          example: user@test.com
+        email_verified:
+          type: boolean
+          example: false
+        is_editor:
+          type: boolean
+          example: false
+    UserRegister:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Jon Doe
+        email:
+          type: string
+          example: user@test.com
+        password:
+          type: string
+          example: 'password'
+        password_confirmation:
+          type: string
+          example: 'password'
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@test.com
+        password:
+          type: string
+          example: 'password'
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          type: string
+          example: "2|BcDzBWZ7MczeYzuxJA68GOg4aujJCePXUCHoOCvY"
+    Error422:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "The email field is required. (and 1 more error)"
+        errors:
+          type: object
+          example:
+            email: ["The Email field is required"]
+            password: ["The Password field is required"]
+  parameters:
+    jsonContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - 'application/json'
+    jsonAccept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - 'application/json'
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      example: 'Bearer 2|BcDzBWZ7MczeYzuxJA68GOg4aujJCePXUCHoOCvY'

@@ -1,0 +1,554 @@
+openapi: 3.0.0
+info: {}
+paths: {}
+components:
+  parameters:
+    jsonContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - 'application/json'
+    jsonAccept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - 'application/json'
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      example: 'Bearer 2|BcDzBWZ7MczeYzuxJA68GOg4aujJCePXUCHoOCvY'
+  schemas:
+    Error422:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "The name field is required. (and 1 more error)"
+        errors:
+          type: object
+          example:
+            name: [ "The name field is required" ]
+            other: [ "The other field is required" ]
+    Error401:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Unauthenticated."
+    Error403:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Only <role> can alter data."
+    Error404:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "No query results for model [App\\Models\\<Model>] <id>"
+    DataObject:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+    MediaResource:
+      type: object
+      properties:
+        url:
+          type: string
+          example: "https://via.placeholder.com/400x400.png/0077ff?text=iure"
+        meta:
+          type: string
+          example: "cover photo"
+    BindingRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Hardback"
+    BindingResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: "Hardback"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    LanguageRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "English"
+        iso_639_1:
+          type: string
+          example: "en"
+    LanguageResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "English"
+        iso_639_1:
+          type: string
+          example: "en"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    ItemTypeRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Light Novel"
+    ItemTypeResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: "Light Novel"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    PublisherRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "VIZ Media"
+        url:
+          type: string
+          example: "https://www.viz.com/"
+        about:
+          type: string
+          example: "VIZ Media LLC is an American entertainment company headquartered in San Francisco, California, focused on publishing manga, distribution and licensing Japanese anime, films, and television series. It was founded in 1986 as VIZ LLC. In 2005, VIZ LLC and ShoPro Entertainment merged to form the current VIZ Media LLC, which is owned by Japanese publishing conglomerates Shueisha and Shogakukan, as well as Japanese production company Shogakukan-Shueisha Productions (ShoPro)."
+        logo:
+          type: string
+          format: binary
+    PublisherResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "VIZ Media"
+        url:
+          type: string
+          example: "https://www.viz.com/"
+        about:
+          type: string
+          example: "VIZ Media LLC is an American entertainment company headquartered in San Francisco, California, focused on publishing manga, distribution and licensing Japanese anime, films, and television series. It was founded in 1986 as VIZ LLC. In 2005, VIZ LLC and ShoPro Entertainment merged to form the current VIZ Media LLC, which is owned by Japanese publishing conglomerates Shueisha and Shogakukan, as well as Japanese production company Shogakukan-Shueisha Productions (ShoPro)."
+        logo:
+          $ref: '#/components/schemas/MediaResource'
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    StatusRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Ongoing"
+    StatusResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: "Ongoing"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    StaffRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Rie Takahashi"
+        native_name:
+          type: string
+          example: "高橋 李依"
+        description:
+          type: string
+          example: "Rie Takahashi (高橋 李依, Takahashi Rie, born February 27, 1994) is a Japanese voice actress and singer affiliated with 81 Produce.[1] She had a leading role in the anime series Seiyu's Life!, where she became part of the musical unit Earphones. She voiced Futaba Ichinose in Seiyu's Life!, Megumin in KonoSuba, Emilia in Re:Zero − Starting Life in Another World, Takagi-san in Teasing Master Takagi-san, Mash Kyrielight in Fate/Grand Order, Mirai Asahina/Cure Miracle in Witchy PreCure!, Dan Kouzo in Bakugan: Battle Planet, and Hu Tao in Genshin Impact. She performed theme songs for the same series. She won the Best Female Newcomer at the 10th Seiyu Awards."
+        age:
+          type: number
+          example: 29
+        gender:
+          type: string
+          example: "Female"
+        origin:
+          type: string
+          example: "Saitama Prefecture, Japan"
+        started_on:
+          type: string
+          example: "2013"
+        stopped_on:
+          type: string
+          example: Null
+        picture:
+          type: string
+          format: binary
+    StaffResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "Rie Takahashi"
+        native_name:
+          type: string
+          example: "高橋 李依"
+        description:
+          type: string
+          example: "Rie Takahashi (高橋 李依, Takahashi Rie, born February 27, 1994) is a Japanese voice actress and singer affiliated with 81 Produce.[1] She had a leading role in the anime series Seiyu's Life!, where she became part of the musical unit Earphones. She voiced Futaba Ichinose in Seiyu's Life!, Megumin in KonoSuba, Emilia in Re:Zero − Starting Life in Another World, Takagi-san in Teasing Master Takagi-san, Mash Kyrielight in Fate/Grand Order, Mirai Asahina/Cure Miracle in Witchy PreCure!, Dan Kouzo in Bakugan: Battle Planet, and Hu Tao in Genshin Impact. She performed theme songs for the same series. She won the Best Female Newcomer at the 10th Seiyu Awards."
+        age:
+          type: number
+          example: 29
+        gender:
+          type: string
+          example: "Female"
+        origin:
+          type: string
+          example: "Saitama Prefecture, Japan"
+        started_on:
+          type: string
+          example: "2013"
+        stopped_on:
+          type: string
+          example: Null
+        picture:
+          $ref: '#/components/schemas/MediaResource'
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    SeriesRequest:
+      type: object
+      properties:
+        names:
+          type: array
+          example: '["ぼっち・ざ・ろっく!", "Bocchi the Rock!"]'
+        name_languages:
+          type: array
+          example: '[3, 1]'
+          description: "Array of Language IDs"
+        cover:
+          type: string
+          format: binary
+    SeriesResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        names:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesNameResource'
+        cover:
+          $ref: '#/components/schemas/MediaResource'
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    SeriesNameResource:
+      type: object
+      properties:
+        value:
+          type: string
+          example: "ぼっち・ざ・ろっく!"
+        language:
+          $ref: '#/components/schemas/LanguageResource'
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    SeriesTypeRequest:
+      type: object
+      properties:
+        series_id:
+          type: integer
+          example: 2
+          description: "Series ID"
+        item_type_id:
+          type: integer
+          example: 2
+          description: "Item Type ID"
+        status_id:
+          type: integer
+          example: 5
+          description: "Status ID"
+        staff:
+          type: array
+          example: '[2, 3, 21]'
+          description: "Array of Staff IDs"
+        roles:
+          type: array
+          example: '["Author", "Artist", "Translator"]'
+          description: "Array of Role strings, associated in the same order as the Staff IDs"
+        cover:
+          type: string
+          format: binary
+    SeriesTypeResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        series:
+          $ref: '#/components/schemas/SeriesResource'
+        type:
+          $ref: '#/components/schemas/ItemTypeResource'
+        status:
+          $ref: '#/components/schemas/StatusResource'
+        staff:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/StaffResource'
+              - type: object
+                required:
+                  - role
+                properties:
+                  role:
+                    type: string
+                    example: "Author"
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+    BookRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "ぼっち・ざ・ろっく！　１巻"
+        summary:
+          type: string
+          example: "「ぼっちちゃん」こと後藤ひとりは、ギターを愛する孤独な少女。 家で一人寂しく弾くだけの毎日でしたが、ひょんなことから伊地知虹夏が率いる「結束バンド」に加入することに。 人前での演奏に不慣れな後藤は、立派なバンドマンになれるのか！？ 全国のぼっちな少年少女に届ける、いま最高にアツい音楽漫画！！"
+        isbn_10:
+          type: string
+          example: Null
+        isbn_13:
+          type: string
+          example: "9784832270725"
+        page_count:
+          type: integer
+          example: 120
+        release_date:
+          type: string
+          example: "2019-02-27"
+        series_type_id:
+          type: integer
+          example: 2
+          description: "Series Type ID"
+        publisher_id:
+          type: integer
+          example: 1
+          description: "Publisher ID"
+        language_id:
+          type: integer
+          example: 1
+          description: "Language ID"
+        binding_id:
+          type: integer
+          example: 1
+          description: "Binding ID"
+        cover:
+          type: string
+          format: binary
+    BookResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "ぼっち・ざ・ろっく！　１巻"
+        summary:
+          type: string
+          example: "「ぼっちちゃん」こと後藤ひとりは、ギターを愛する孤独な少女。 家で一人寂しく弾くだけの毎日でしたが、ひょんなことから伊地知虹夏が率いる「結束バンド」に加入することに。 人前での演奏に不慣れな後藤は、立派なバンドマンになれるのか！？ 全国のぼっちな少年少女に届ける、いま最高にアツい音楽漫画！！"
+        isbn_10:
+          type: string
+          example: Null
+        isbn_13:
+          type: string
+          example: "9784832270725"
+        page_count:
+          type: integer
+          example: 120
+        release_date:
+          type: string
+          example: "2019-02-27"
+        series_type:
+          $ref: '#/components/schemas/SeriesTypeResource'
+        publisher:
+          $ref: '#/components/schemas/PublisherResource'
+        language:
+          $ref: '#/components/schemas/LanguageResource'
+        binding:
+          $ref: '#/components/schemas/BindingResource'
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
+  responses:
+    BadData:
+      description: Missing / Incorrect data submitted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error422'
+    Unauthenticated:
+      description: Expired or Missing Bearer Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error401'
+    Unauthorized:
+      description: No permission (Editor/Admin Only Access)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error403'
+    NotFound:
+      description: Wrong object ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error404'
+    Binding200:
+      description: Successfull operation for Binding Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/BindingResource'
+    Language200:
+      description: Successfull operation for Language Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/LanguageResource'
+    ItemType200:
+      description: Successfull operation for ItemType Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/ItemTypeResource'
+    Publisher200:
+      description: Successfull operation for Publisher Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/PublisherResource'
+    Status200:
+      description: Successfull operation for Status Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/StatusResource'
+    Staff200:
+      description: Successfull operation for Staff Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/StaffResource'
+    Series200:
+      description: Successfull operation for Series Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/SeriesResource'
+    SeriesType200:
+      description: Successfull operation for Series Type Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/SeriesTypeResource'
+    Book200:
+      description: Successfull operation for Book Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/BookResource'
