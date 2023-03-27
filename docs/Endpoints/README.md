@@ -60,9 +60,16 @@ to users. This enables users to discover new books and publishers more easily.
 
 ## Series
 
+
+<swagger-ui src="./series/openapi.yml"/>
+
 ## SeriesType
 
+<swagger-ui src="./seriestype/openapi.yml"/>
+
 ## Book
+
+<swagger-ui src="./book/openapi.yml"/>
 
 
 [iso_codes_wiki]: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
