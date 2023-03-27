@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df929879-ac52-4c6c-b160-0d55d2724c55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/Endpoints/status/openapi.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/Endpoints/staff/openapi.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/Endpoints/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Endpoints/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/openapi-components.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/openapi-components.yml" afterDir="false" />
     </list>
@@ -36,7 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "G:/Projects/mangadb-docs/docs/Endpoints",
+    "last_opened_file_path": "G:/Projects/mangadb-docs/docs/Endpoints/staff",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -47,11 +48,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Projects\mangadb-docs\docs\Endpoints\staff" />
       <recent name="G:\Projects\mangadb-docs\docs\Endpoints" />
       <recent name="G:\Projects\mangadb-docs\docs\Endpoints\partials" />
       <recent name="G:\Projects\mangadb-docs\docs\Data Structures" />
       <recent name="G:\Projects\mangadb-docs\docs\ro" />
-      <recent name="G:\Projects\mangadb-docs\docs\docsv1\jp" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\Projects\mangadb-docs\docs" />
@@ -75,7 +76,7 @@
       <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
       <option name="jdkPath" value="" />
       <option name="language" value="java" />
-      <option name="specificationPath" value="G:\Projects\mangadb-docs\docs\Endpoints\status\openapi.yml" />
+      <option name="specificationPath" value="G:\Projects\mangadb-docs\docs\openapi-components.yml" />
       <method v="2" />
     </configuration>
   </component>
@@ -90,7 +91,10 @@
       <workItem from="1678674432125" duration="18582000" />
       <workItem from="1678807869159" duration="12984000" />
       <workItem from="1678898225660" duration="19160000" />
-      <workItem from="1678978528880" duration="354000" />
+      <workItem from="1678978528880" duration="421000" />
+      <workItem from="1679417353235" duration="2000" />
+      <workItem from="1679608659988" duration="19000" />
+      <workItem from="1679933346117" duration="872000" />
     </task>
     <servers />
   </component>

@@ -56,6 +56,8 @@ to users. This enables users to discover new books and publishers more easily.
 
 ## Staff
 
+<swagger-ui src="./staff/openapi.yml"/>
+
 ## Series
 
 ## SeriesType

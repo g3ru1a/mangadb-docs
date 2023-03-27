@@ -195,6 +195,74 @@ components:
           example: "2023-03-13 01:21:26"
           required: false
           description: "Only shows up when a resource has been deleted"
+    StaffRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Rie Takahashi"
+        native_name:
+          type: string
+          example: "高橋 李依"
+        description:
+          type: string
+          example: "Rie Takahashi (高橋 李依, Takahashi Rie, born February 27, 1994) is a Japanese voice actress and singer affiliated with 81 Produce.[1] She had a leading role in the anime series Seiyu's Life!, where she became part of the musical unit Earphones. She voiced Futaba Ichinose in Seiyu's Life!, Megumin in KonoSuba, Emilia in Re:Zero − Starting Life in Another World, Takagi-san in Teasing Master Takagi-san, Mash Kyrielight in Fate/Grand Order, Mirai Asahina/Cure Miracle in Witchy PreCure!, Dan Kouzo in Bakugan: Battle Planet, and Hu Tao in Genshin Impact. She performed theme songs for the same series. She won the Best Female Newcomer at the 10th Seiyu Awards."
+        age:
+          type: number
+          example: 29
+        gender:
+          type: string
+          example: "Female"
+        origin:
+          type: string
+          example: "Saitama Prefecture, Japan"
+        started_on:
+          type: string
+          example: "2013"
+        stopped_on:
+          type: string
+          example: Null
+        picture:
+          type: string
+          format: binary
+    StaffResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "Rie Takahashi"
+        native_name:
+          type: string
+          example: "高橋 李依"
+        description:
+          type: string
+          example: "Rie Takahashi (高橋 李依, Takahashi Rie, born February 27, 1994) is a Japanese voice actress and singer affiliated with 81 Produce.[1] She had a leading role in the anime series Seiyu's Life!, where she became part of the musical unit Earphones. She voiced Futaba Ichinose in Seiyu's Life!, Megumin in KonoSuba, Emilia in Re:Zero − Starting Life in Another World, Takagi-san in Teasing Master Takagi-san, Mash Kyrielight in Fate/Grand Order, Mirai Asahina/Cure Miracle in Witchy PreCure!, Dan Kouzo in Bakugan: Battle Planet, and Hu Tao in Genshin Impact. She performed theme songs for the same series. She won the Best Female Newcomer at the 10th Seiyu Awards."
+        age:
+          type: number
+          example: 29
+        gender:
+          type: string
+          example: "Female"
+        origin:
+          type: string
+          example: "Saitama Prefecture, Japan"
+        started_on:
+          type: string
+          example: "2013"
+        stopped_on:
+          type: string
+          example: Null
+        picture:
+          type: string
+          format: binary
+        deleted_at:
+          type: string
+          example: "2023-03-13 01:21:26"
+          required: false
+          description: "Only shows up when a resource has been deleted"
   responses:
     BadData:
       description: Missing / Incorrect data submitted
@@ -270,3 +338,13 @@ components:
               - properties:
                   data:
                     $ref: '#/components/schemas/StatusResource'
+    Staff200:
+      description: Successfull operation for Staff Object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataObject'
+              - properties:
+                  data:
+                    $ref: '#/components/schemas/StaffResource'

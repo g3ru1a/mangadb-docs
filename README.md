@@ -13,6 +13,13 @@ The documentation covers topics such as installation, configuration, and usage o
 for contributing to the project and reporting issues. The repository aims to make it easy for developers to integrate the
 MangaDB API into their applications.
 
+## Run locally
+
+```bash
+$ venv\Scripts\activate.ps1
+$ mkdocs serve
+```
+
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via [github discussions][github-discussions-page],
