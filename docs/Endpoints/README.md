@@ -82,7 +82,4 @@ Book contains all the information about a book, such as the title, author, publi
 
 <swagger-ui src="./book/openapi.yml"/>
 
-
-
-
 [iso_codes_wiki]: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
